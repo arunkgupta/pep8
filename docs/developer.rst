@@ -11,13 +11,28 @@ Source code
 The source code is currently `available on GitHub`_ under the terms and
 conditions of the :ref:`Expat license <license>`.  Fork away!
 
-* `Source code <https://github.com/jcrocholl/pep8>`_ and
-  `issue tracker <https://github.com/jcrocholl/pep8/issues>`_ on GitHub.
-* `Continuous tests <http://travis-ci.org/jcrocholl/pep8>`_ against Python
+* `Source code <https://github.com/pycqa/pycodestyle>`_ and
+  `issue tracker <https://github.com/pycqa/pycodestyle/issues>`_ on GitHub.
+* `Continuous tests <http://travis-ci.org/pycqa/pep8>`_ against Python
   2.6 through 3.4 and PyPy, on `Travis-CI platform
   <http://about.travis-ci.org/>`_.
 
-.. _available on GitHub: https://github.com/jcrocholl/pep8
+.. _available on GitHub: https://github.com/pycqa/pycodestyle
+
+
+Direction
+~~~~~~~~~
+
+Some high-level aims and directions to bear in mind for contributions:
+
+* ``pep8`` is intended to be as fast as possible.
+  Using the ``ast`` module defeats that purpose.
+  The `pep8-naming <https://github.com/flintwork/pep8-naming>`_ plugin exists for this sort of functionality.
+* If you want to provide extensibility / plugins,
+  please see `flake8 <https://gitlab.com/pycqa/flake8>`_ -
+  ``pep8`` doesn't want or need a plugin architecture.
+* Python 2.6 support is still deemed important.
+* ``pep8`` aims to have no external dependencies.
 
 
 Contribute
@@ -59,6 +74,12 @@ additional information with extra arguments.  All attributes of the
 * ``previous_indent_level``: indentation on previous line
 * ``previous_logical``: previous logical line
 
+Check plugins can also maintain per-file state. If you need this, declare
+a parameter named ``checker_state``. You will be passed a dict, which will be
+the same one for all lines in the same file but a different one for different
+files. Each check plugin gets its own dict, so you don't need to worry about
+clobbering the state of other plugins.
+
 The docstring of each check function shall be the relevant part of
 text from `PEP 8`_.  It is printed if the user enables ``--show-pep8``.
 Several docstrings contain examples directly from the `PEP 8`_ document.
@@ -80,7 +101,10 @@ Then be sure to pass the tests::
   $ python pep8.py --doctest
   $ python pep8.py --verbose pep8.py
 
+When contributing to pycodestyle, please observe our `Code of Conduct`_.
+
 .. _PEP 8: http://www.python.org/dev/peps/pep-0008/
+.. _Code of Conduct: http://meta.pycqa.org/en/latest/code-of-conduct.html
 
 
 Changes
